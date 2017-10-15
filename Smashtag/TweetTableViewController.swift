@@ -9,17 +9,27 @@
 import UIKit
 import Twitter
 
-class TweetTableViewController: UITableViewController {
+class TweetTableViewController: UITableViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var searchTextField: UITextField! {
+        didSet {
+            searchTextField.delegate = self
+        }
+    }
     
     private var tweets = [Array<Twitter.Tweet>]() {
         didSet {
-            print(tweets)
+            //print(tweets)
         }
     }
     
     
     var searchText: String? {
         didSet {
+            searchTextField?.text = searchText
+            searchTextField?.resignFirstResponder()
+            lastTwitterRequest = nil
+            
             tweets.removeAll()
             tableView.reloadData()
             searchForTweets()
@@ -29,7 +39,7 @@ class TweetTableViewController: UITableViewController {
     
     private func twitterRequest() -> Twitter.Request? {
         if let query = searchText, !query.isEmpty {
-            return Twitter.Request(search: query, count: 100)
+            return Twitter.Request(search: "\(query) -filter:safe -filter:retweets", count: 100)
         }
         return nil
     }
@@ -37,7 +47,7 @@ class TweetTableViewController: UITableViewController {
     private var lastTwitterRequest: Twitter.Request?
     
     private func searchForTweets() {
-        if let request = twitterRequest() {
+        if let request = lastTwitterRequest?.newer ?? twitterRequest() {
             lastTwitterRequest = request
             request.fetchTweets { [weak self] newTweets in
                 DispatchQueue.main.async {
@@ -45,14 +55,18 @@ class TweetTableViewController: UITableViewController {
                         self?.tweets.insert(newTweets, at: 0)
                         self?.tableView.insertSections([0], with: .fade)
                     }
+                    self?.refreshControl?.endRefreshing()
                 }
-
             }
+        } else {
+            self.refreshControl?.endRefreshing()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //tableView.estimatedRowHeight = tableView.rowHeight
+        //tableView.rowHeight = UITableViewAutomaticDimension
         
         searchText = "#stanford"
     }
@@ -72,10 +86,14 @@ class TweetTableViewController: UITableViewController {
      let cell = tableView.dequeueReusableCell(withIdentifier: "Tweet", for: indexPath)
      
      // Configure the cell...
+    
      let tweet = tweets[indexPath.section][indexPath.row]
-        cell.textLabel?.text = tweet.text
-        cell.detailTextLabel?.text = tweet.user.name
-        
+//        cell.textLabel?.text = tweet.text
+//        cell.detailTextLabel?.text = tweet.user.name
+        if let tweetCell = cell as? TweetTableViewCell {
+            tweetCell.tweet = tweet
+        }
+     
      return cell
      }
     
