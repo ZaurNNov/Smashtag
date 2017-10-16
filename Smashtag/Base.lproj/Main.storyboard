@@ -23,7 +23,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="twitter" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                         </textField>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="138" id="2zS-hf-HBN" customClass="TweetTableViewCell" customModule="Smashtag" customModuleProvider="target">
@@ -193,7 +193,7 @@
                         <viewLayoutGuide key="safeArea" id="b7S-0V-cdb"/>
                     </scrollView>
                     <navigationItem key="navigationItem" title="Title" id="p0j-nf-d93">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="T6G-5I-00t">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="T6G-5I-00t">
                             <connections>
                                 <action selector="toRootViewController:" destination="zMi-dO-j45" id="0CS-Z0-EJx"/>
                             </connections>
@@ -228,6 +228,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="C0V-Ct-8bC"/>
         <segue reference="4QW-dv-3N4"/>
     </inferredMetricsTieBreakers>
 </document>
