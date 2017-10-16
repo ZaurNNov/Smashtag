@@ -107,7 +107,8 @@ class MentionsTableViewController: UITableViewController {
         static let ImageCell = "ImageCell"
         
         //for segue
-        static let ShowMentions = "ShowMentions"
+        static let FromKeyCell = "FromKeyCell"
+        static let ShowImage = "ShowImage"
     }
 
     /*
@@ -145,14 +146,60 @@ class MentionsTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let id = segue.identifier {
+            
+            if id == variableIdentifiers.FromKeyCell {
+                if let ttvc = segue.destination as? TweetTableViewController,
+                    let cell = sender as? UITableViewCell,
+                    let text = cell.textLabel?.text {
+                    ttvc.searchText = text
+                }
+            } else if id == variableIdentifiers.ShowImage {
+                if let ivc = segue.destination as? ImageViewController,
+                    let cell = sender as? ImageTableViewCell {
+                    
+                    //ivc.imageURL = cell.imageUrl
+                    ivc.image = cell.tweetImage.image
+                    ivc.title = title
+                }
+            }
+        }
     }
-    */
+    
 
 }
+
+
+extension MentionsTableViewController {
+    //Safari
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == variableIdentifiers.FromKeyCell {
+            if let cell = sender as? UITableViewCell,
+                let indexPath = tableView.indexPath(for: cell),
+                mentionsSections[indexPath.section].type == "URLs" {
+                
+                if let urlString = cell.textLabel?.text,
+                    let url = URL(string: urlString) {
+                    
+                    //for iOS >= 10.0
+                    if #available(iOS 10.0, *){
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+                return false
+            }
+        }
+        return true
+    }
+    
+}
+
+
