@@ -31,6 +31,12 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    var newTweets = Array<Twitter.Tweet> () {
+        didSet {
+            tweets.insert(newTweets, at:0)
+            tableView.insertSections([0], with: .fade)
+        }
+    }
     
     var searchText: String? {
         didSet {
@@ -42,8 +48,15 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
             tableView.reloadData()
             searchForTweets()
             title = searchText
+            
+            //save recent search in array
+            if let term = searchText {
+                RecentSearches.addRecents(term)
+            }
         }
     }
+    
+
     
     private func twitterRequest() -> Twitter.Request? {
         if let query = searchText, !query.isEmpty {
@@ -76,7 +89,19 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        searchText = "#Stanford"
+        //searchText = variableIdentifiers.searchHashtagText
+        if tweets.count == 0 {
+            if searchText == nil, let searchLast = RecentSearches.searches.first {
+                searchText = searchLast
+            } else {
+                searchTextField?.text = searchText
+                searchTextField?.resignFirstResponder()
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     // MARK: - UITableViewDataSourse
@@ -90,75 +115,43 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         return tweets[section].count
     }
     
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: variableIdentifiers.TweetCell, for: indexPath)
-     
-     // Configure the cell...
-    
-     let tweet = tweets[indexPath.section][indexPath.row]
-//        cell.textLabel?.text = tweet.text
-//        cell.detailTextLabel?.text = tweet.user.name
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: variableIdentifiers.TweetCell, for: indexPath)
+        
+        let tweet = tweets[indexPath.section][indexPath.row]
+
         if let tweetCell = cell as? TweetTableViewCell {
             tweetCell.tweet = tweet
         }
-     
-     return cell
-     }
+        
+        return cell
+    }
     
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "\(tweets.count-section)"
+//    }
     
     private struct variableIdentifiers {
         //for cell
         static let TweetCell = "Tweet"
-        
         //for segue
         static let ShowMentions = "ShowMentions"
+        static let ShowImages = "ShowImages"
+        //other
+        static let searchHashtagText = "#iOS"
     }
     
-     // MARK: - Navigation
+    // MARK: - Navigation
     
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-     {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
         if let id = segue.identifier {
             if id == variableIdentifiers.ShowMentions,
-            let mtvc = segue.destination as? MentionsTableViewController,
-            let tweetCell = sender as? TweetTableViewCell {
-                    mtvc.tweet = tweetCell.tweet
+                let mtvc = segue.destination as? MentionsTableViewController,
+                let tweetCell = sender as? TweetTableViewCell {
+                mtvc.tweet = tweetCell.tweet
             }
         }
-     }
- 
+    }
+    
 }
