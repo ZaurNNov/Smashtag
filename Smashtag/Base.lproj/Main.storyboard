@@ -85,6 +85,7 @@
                                     <outlet property="tweetProfileImageView" destination="Ca7-Oa-3EI" id="Wlg-cZ-zbl"/>
                                     <outlet property="tweetTextLabel" destination="iVp-TE-nTK" id="9Wm-ia-rje"/>
                                     <outlet property="tweetUserLabel" destination="wcR-Nq-Shr" id="Dw5-xF-cMm"/>
+                                    <segue destination="fSS-WQ-BvA" kind="show" identifier="ShowMentions" id="C0V-Ct-8bC"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -128,19 +129,19 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="577" id="f2r-2Q-3do" customClass="ImageTableViewCell" customModule="Smashtag" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="577"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageCell" rowHeight="273" id="f2r-2Q-3do" customClass="ImageTableViewCell" customModule="Smashtag" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="273"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f2r-2Q-3do" id="1t2-Gl-WTc">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="576.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="272.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1ZC-dz-20e">
-                                            <rect key="frame" x="0.0" y="-1" width="375" height="577"/>
+                                            <rect key="frame" x="0.0" y="-1" width="375" height="274"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="DW9-KC-SFG">
-                                            <rect key="frame" x="169" y="270" width="37" height="37"/>
+                                            <rect key="frame" x="169" y="118" width="37" height="37"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
@@ -148,6 +149,10 @@
                                         <constraint firstItem="DW9-KC-SFG" firstAttribute="centerX" secondItem="1t2-Gl-WTc" secondAttribute="centerX" id="cqI-cU-ydr"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="spinner" destination="DW9-KC-SFG" id="E4e-51-jxR"/>
+                                    <outlet property="tweetImage" destination="1ZC-dz-20e" id="b33-Se-Cgc"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

@@ -7,45 +7,108 @@
 //
 
 import UIKit
+import Twitter
 
 class MentionsTableViewController: UITableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    
+    // Twiiter
+    var tweet: Twitter.Tweet? {
+        didSet {
+            guard let tweet = tweet else {return}
+            title = tweet.user.screenName
+            mentionsSections = initMentionSections(from: tweet)
+            tableView.reloadData()
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    // Mentions
+    private var mentionsSections: [MentionSection] = [] //mentions array
+    private struct MentionSection {
+        var type: String
+        var mentions: [MentionItem]
     }
-
+    
+    //for mentions:
+    private enum MentionItem {
+        case keyword(String) // hashtag, urls, users
+        case image(URL, Double) // url - url image, double - aspect ratio)
+    }
+    
+    private func initMentionSections(from tweet: Twitter.Tweet) -> [MentionSection]
+    {
+        var funcMentionsSections = [MentionSection]()
+        
+        if tweet.media.count > 0 {
+            funcMentionsSections.append(MentionSection(
+                type: "Images",
+                mentions: tweet.media.map{ MentionItem.image($0.url, $0.aspectRatio)}))
+        }
+        if tweet.urls.count > 0 {
+            funcMentionsSections.append(MentionSection(type: "URLs", mentions: tweet.urls.map{ MentionItem.keyword($0.keyword)}))
+        }
+        if tweet.hashtags.count > 0 {
+            funcMentionsSections.append(MentionSection(type: "Hashtags", mentions: tweet.hashtags.map{ MentionItem.keyword($0.keyword)}))
+        }
+        if tweet.userMentions.count > 0 {
+            funcMentionsSections.append(MentionSection(type: "Users", mentions: tweet.userMentions.map{ MentionItem.keyword($0.keyword)}))
+        }
+        
+        return funcMentionsSections
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return mentionsSections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return mentionsSections[section].mentions.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+        
+        let mention = mentionsSections[indexPath.section].mentions[indexPath.row]
+        switch mention {
+        case .keyword(let keyword):
+            let cell = tableView.dequeueReusableCell(withIdentifier: variableIdentifiers.KeyCell, for: indexPath)
+            cell.textLabel?.text = keyword
+            return cell
+        
+        case .image(let url, _):
+            let cell = tableView.dequeueReusableCell(withIdentifier: variableIdentifiers.ImageCell, for: indexPath)
+            if let imageCell = cell as? ImageTableViewCell {
+                imageCell.imageUrl = url
+            }
+            return cell
+        }
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let mention = mentionsSections[indexPath.section].mentions[indexPath.row]
+        switch mention {
+        case .image(_, let ratio):
+            return tableView.bounds.size.width / CGFloat(ratio)
+        default:
+            return UITableViewAutomaticDimension
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return mentionsSections[section].type
+    }
+    
+    private struct variableIdentifiers {
+        //for cell
+        static let KeyCell = "KeyCell"
+        static let ImageCell = "ImageCell"
+        
+        //for segue
+        static let ShowMentions = "ShowMentions"
+    }
 
     /*
     // Override to support conditional editing of the table view.

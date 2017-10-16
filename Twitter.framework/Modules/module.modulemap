@@ -1,4 +1,0 @@
-framework module Twitter {
-    header "Twitter-Swift.h"
-    requires objc
-}

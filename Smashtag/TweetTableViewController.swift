@@ -73,8 +73,8 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //tableView.estimatedRowHeight = tableView.rowHeight
-        //tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         searchText = "#Stanford"
     }
@@ -91,7 +91,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "Tweet", for: indexPath)
+     let cell = tableView.dequeueReusableCell(withIdentifier: variableIdentifiers.TweetCell, for: indexPath)
      
      // Configure the cell...
     
@@ -140,14 +140,25 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
      }
      */
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    private struct variableIdentifiers {
+        //for cell
+        static let TweetCell = "Tweet"
+        
+        //for segue
+        static let ShowMentions = "ShowMentions"
+    }
     
+     // MARK: - Navigation
+    
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+     {
+        if let id = segue.identifier {
+            if id == variableIdentifiers.ShowMentions,
+            let mtvc = segue.destination as? MentionsTableViewController,
+            let tweetCell = sender as? TweetTableViewCell {
+                    mtvc.tweet = tweetCell.tweet
+            }
+        }
+     }
+ 
 }
