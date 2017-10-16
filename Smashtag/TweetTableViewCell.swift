@@ -44,14 +44,7 @@ class TweetTableViewCell: UITableViewCell {
         //add color attributes
         tweetTextLabel?.attributedText = setTextLabel(tweet)
         
-        if let profileImageURL = tweet?.user.profileImageURL {
-            //Fix this main thread
-            if let imageData = try? Data(contentsOf: profileImageURL) {
-                tweetProfileImageView?.image = UIImage(data: imageData)
-            }
-        } else {
-            tweetProfileImageView?.image = nil
-        }
+        setProfileImageView(tweet) // async update
         
         if let created = tweet?.created {
             let formatter = DateFormatter()
@@ -64,6 +57,28 @@ class TweetTableViewCell: UITableViewCell {
             tweetCreatedLabel?.text = formatter.string(from: created)
         } else {
             tweetCreatedLabel?.text = nil
+        }
+    }
+    
+    private func setProfileImageView(_ tweet: Twitter.Tweet?) {
+        
+        tweetProfileImageView?.image = nil
+        
+        guard let tweet = tweet, let profileImageURL = tweet.user.profileImageURL else {return}
+        
+        //get data outside of main thread
+        DispatchQueue.global(qos: .userInitiated).async {
+            [weak self] in
+            
+            let imageDataURL = try? Data(contentsOf: profileImageURL)
+            if profileImageURL == tweet.user.profileImageURL,
+                let imageData = imageDataURL {
+                
+                //UI -> returm in main thread
+                DispatchQueue.main.async {
+                    self?.tweetProfileImageView?.image = UIImage(data: imageData)
+                }
+            }
         }
     }
     

@@ -17,6 +17,14 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    //in keyboard activate "search" buttun
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == searchTextField {
+            searchText = searchTextField.text
+        }
+        return true
+    }
+    
     private var tweets = [Array<Twitter.Tweet>]() {
         didSet {
             //print(tweets)
@@ -68,7 +76,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         //tableView.estimatedRowHeight = tableView.rowHeight
         //tableView.rowHeight = UITableViewAutomaticDimension
         
-        searchText = "#stanford"
+        searchText = "#Stanford"
     }
     
     // MARK: - UITableViewDataSourse
