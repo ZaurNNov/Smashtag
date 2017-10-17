@@ -17,6 +17,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    @IBAction func refresh(_ sender: UIRefreshControl) {
+        searchForTweets()
+    }
+    
     //in keyboard activate "search" buttun
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == searchTextField {
@@ -56,8 +60,6 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
-
-    
     private func twitterRequest() -> Twitter.Request? {
         if let query = searchText, !query.isEmpty {
             return Twitter.Request(search: "\(query) -filter:safe -filter:retweets", count: 100)
@@ -70,17 +72,21 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     private func searchForTweets() {
         if let request = lastTwitterRequest?.newer ?? twitterRequest() {
             lastTwitterRequest = request
+            //of the main queue
             request.fetchTweets { [weak self] newTweets in
+                //off the main queue
                 DispatchQueue.main.async {
+                    //back to main queue
                     if request == self?.lastTwitterRequest {
                         self?.tweets.insert(newTweets, at: 0)
                         self?.tableView.insertSections([0], with: .fade)
                     }
+                    //refreshing
                     self?.refreshControl?.endRefreshing()
                 }
             }
         } else {
-            self.refreshControl?.endRefreshing()
+            self.refreshControl?.endRefreshing() // REFRESHING
         }
     }
     
@@ -106,12 +112,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     
     // MARK: - UITableViewDataSourse
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return tweets.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return tweets[section].count
     }
     
@@ -127,9 +131,9 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "\(tweets.count-section)"
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "\(tweets.count-section)"
+    }
     
     private struct variableIdentifiers {
         //for cell
