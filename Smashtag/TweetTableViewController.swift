@@ -60,6 +60,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    func insertTweets(_ newTweets: [Twitter.Tweet]) {
+        self.tweets.insert(newTweets, at: 0)
+        self.tableView.insertSections([0], with: .fade)
+    }
+    
     private func twitterRequest() -> Twitter.Request? {
         if let query = searchText, !query.isEmpty {
             return Twitter.Request(search: "\(query) -filter:safe -filter:retweets", count: 100)
@@ -78,8 +83,8 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
                 DispatchQueue.main.async {
                     //back to main queue
                     if request == self?.lastTwitterRequest {
-                        self?.tweets.insert(newTweets, at: 0)
-                        self?.tableView.insertSections([0], with: .fade)
+                        self?.insertTweets(newTweets)
+                        
                     }
                     //refreshing
                     self?.refreshControl?.endRefreshing()
@@ -122,7 +127,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: variableIdentifiers.TweetCell, for: indexPath)
         
-        let tweet = tweets[indexPath.section][indexPath.row]
+        let tweet: Twitter.Tweet = tweets[indexPath.section][indexPath.row]
 
         if let tweetCell = cell as? TweetTableViewCell {
             tweetCell.tweet = tweet
