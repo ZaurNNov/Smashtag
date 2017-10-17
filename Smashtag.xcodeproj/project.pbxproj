@@ -94,6 +94,8 @@
 			isa = PBXGroup;
 			children = (
 				CE8655431F95FDC100A57BC3 /* Smash.xcdatamodeld */,
+				CE8655461F9601A100A57BC3 /* Tweet.swift */,
+				CE8655481F96020800A57BC3 /* TwitterUser.swift */,
 				CE50DE581F96152E00534CBA /* SmashTweetTableViewController.swift */,
 				20C33FA81F939D270056F0E6 /* TweetTableViewController.swift */,
 				20C33FB81F93BE7B0056F0E6 /* TweetTableViewCell.swift */,
@@ -107,8 +109,6 @@
 				20C33FA21F9399AA0056F0E6 /* Info.plist */,
 				20C33F9D1F9399AA0056F0E6 /* Assets.xcassets */,
 				20C33F961F9399AA0056F0E6 /* AppDelegate.swift */,
-				CE8655461F9601A100A57BC3 /* Tweet.swift */,
-				CE8655481F96020800A57BC3 /* TwitterUser.swift */,
 			);
 			path = Smashtag;
 			sourceTree = "<group>";
