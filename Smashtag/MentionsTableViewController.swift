@@ -14,12 +14,9 @@ class MentionsTableViewController: UITableViewController {
     // Twiiter
     var tweet: Twitter.Tweet? {
         didSet {
-            //test
-            print("var tweet: Twitter.Tweet?")
             guard let tweet = tweet else {return}
             title = tweet.user.screenName
             mentionsSections = initMentionSections(from: tweet)
-            print("var tweet: Twitter.Tweet? , before tableView.reloadData()")
             tableView.reloadData()
         }
     }
@@ -40,8 +37,6 @@ class MentionsTableViewController: UITableViewController {
     private func initMentionSections(from tweet: Twitter.Tweet) -> [MentionSection]
     {
         var funcMentionsSections = [MentionSection]()
-        //test
-        print("test: func initMentionSections. var funcMentionsSections = \(funcMentionsSections)")
         
         if tweet.media.count > 0 {
             funcMentionsSections.append(MentionSection(
