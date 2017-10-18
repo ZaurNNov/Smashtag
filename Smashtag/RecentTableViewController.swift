@@ -29,6 +29,8 @@ class RecentTableViewController: UITableViewController {
         
         //for segue
         static let TweetsSegue = "ShowFromRecent"
+        static let SearchTerm = "SearchTerm"
+        
     }
 
     // MARK: - Table view data source
@@ -60,11 +62,22 @@ class RecentTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let id = segue.identifier , id == variableIdentifiers.RecentCell,
-        let cell = sender as? UITableViewCell,
+        
+        if let identifier = segue.identifier , identifier == variableIdentifiers.TweetsSegue,
+            let cell = sender as? UITableViewCell,
             let ttvc = segue.destination as? TweetTableViewController {
+            
             ttvc.searchText = cell.textLabel?.text
+            
+        }  else if let identifier = segue.identifier , identifier == variableIdentifiers.SearchTerm,
+            let cell = sender as? UITableViewCell,
+            let pvc = segue.destination as? SmashTweetersTableViewController
+        {
+            pvc.mentions = cell.textLabel?.text
+            pvc.container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+            pvc.title = "Popularity for " + (cell.textLabel?.text ?? "")
         }
+        
     }
 
 }

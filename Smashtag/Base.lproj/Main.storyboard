@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -71,15 +71,15 @@
                             <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                         </textField>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="138" id="2zS-hf-HBN" customClass="TweetTableViewCell" customModule="Smashtag" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="138" id="2zS-hf-HBN" customClass="TweetTableViewCell" customModule="Smashtag" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="58" width="375" height="138"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2zS-hf-HBN" id="ftw-4e-zSF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="137.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="308" height="137.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VYX-h5-ql1">
-                                            <rect key="frame" x="20" y="20" width="335" height="97.5"/>
+                                            <rect key="frame" x="20" y="20" width="268" height="97.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="LN1-SX-Pzr">
                                                     <rect key="frame" x="0.0" y="0.0" width="64" height="88"/>
@@ -100,7 +100,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="vDJ-hQ-mCh">
-                                                    <rect key="frame" x="74" y="0.0" width="261" height="41"/>
+                                                    <rect key="frame" x="74" y="0.0" width="194" height="41"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WEsyfgiygy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcR-Nq-Shr">
                                                             <rect key="frame" x="0.0" y="0.0" width="94.5" height="20.5"/>
@@ -131,7 +131,7 @@
                                     <outlet property="tweetProfileImageView" destination="Ca7-Oa-3EI" id="Wlg-cZ-zbl"/>
                                     <outlet property="tweetTextLabel" destination="iVp-TE-nTK" id="9Wm-ia-rje"/>
                                     <outlet property="tweetUserLabel" destination="wcR-Nq-Shr" id="Dw5-xF-cMm"/>
-                                    <segue destination="fSS-WQ-BvA" kind="show" identifier="ShowMentions" id="C0V-Ct-8bC"/>
+                                    <segue destination="fSS-WQ-BvA" kind="show" identifier="ShowMentions" trigger="accessoryAction" id="dqQ-Q5-ctl"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -141,11 +141,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="gXU-AK-bWw">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="R75-hG-xxz">
-                            <connections>
-                                <segue destination="Qcv-MG-aTA" kind="show" identifier="SearchTerm" id="fd1-Z7-Kek"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="R75-hG-xxz"/>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="6Hd-Tp-Lb2">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -162,7 +158,7 @@
             </objects>
             <point key="canvasLocation" x="417" y="126"/>
         </scene>
-        <!--Mentions Table View Controller-->
+        <!--Title-->
         <scene sceneID="zMJ-aQ-RL4">
             <objects>
                 <tableViewController id="fSS-WQ-BvA" customClass="MentionsTableViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
@@ -227,6 +223,13 @@
                             <outlet property="delegate" destination="fSS-WQ-BvA" id="aF0-mG-Eu6"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Title" id="YJI-CD-lcR">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="MYv-5f-suN">
+                            <connections>
+                                <action selector="backToRootController:" destination="fSS-WQ-BvA" id="f9g-bH-NH3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ywy-NX-g6v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -241,7 +244,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="tUh-fJ-Kgh">
-                                <rect key="frame" x="169" y="258.5" width="37" height="37"/>
+                                <rect key="frame" x="169" y="325" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
                         <constraints>
@@ -275,15 +278,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecentCell" textLabel="Wxp-ib-7zu" style="IBUITableViewCellStyleDefault" id="P31-Ka-7LI">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="RecentCell" textLabel="Wxp-ib-7zu" style="IBUITableViewCellStyleDefault" id="P31-Ka-7LI">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="P31-Ka-7LI" id="mj2-jH-csd">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="308" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wxp-ib-7zu">
-                                            <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="292" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -292,7 +295,8 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Qcz-gk-eTs" kind="show" identifier="ShowFromRecent" id="dNT-hb-VRF"/>
+                                    <segue destination="Qcz-gk-eTs" kind="show" identifier="ShowFromRecent" id="rtA-SB-ijH"/>
+                                    <segue destination="Qcv-MG-aTA" kind="show" identifier="SearchTerm" trigger="accessoryAction" id="ADK-ib-duy"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -365,6 +369,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dNT-hb-VRF"/>
+        <segue reference="4QW-dv-3N4"/>
     </inferredMetricsTieBreakers>
 </document>

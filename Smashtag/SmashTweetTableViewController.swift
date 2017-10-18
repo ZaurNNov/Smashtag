@@ -59,17 +59,10 @@ class SmashTweetTableViewController: TweetTableViewController {
     
     private struct variableIdentifiers {
         //for segue
-        static let SearchTerm = "SearchTerm"
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == variableIdentifiers.SearchTerm {
-            if let ttvs = segue.destination as? SmashTweetersTableViewController
-            {
-                ttvs.mentions = searchText
-                ttvs.container = container
-                
-            }
-        }
+        
     }
 }
