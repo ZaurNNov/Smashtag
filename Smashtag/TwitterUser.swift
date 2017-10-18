@@ -11,6 +11,7 @@ import CoreData
 import Twitter
 
 class TwitterUser: NSManagedObject {
+    /*
     
     class func findOrCreateTwitterUser(matching twitterInfo: Twitter.User, in context: NSManagedObjectContext) throws -> TwitterUser {
         
@@ -33,5 +34,6 @@ class TwitterUser: NSManagedObject {
         
         return twitterUser
     }
+ */
 
 }

@@ -14,47 +14,75 @@ class SmashTweetersTableViewController: FetchedResultsTableViewController {
     private struct variableIdentifiers {
         //for cell
         static let TwitterUserCell = "TwitterUserCell"
+        //for segue
+        static let ToMainTweetTableView = "ToMainTweetTableView"
+        
     }
     
     var mentions: String? {didSet{UpdateUI()}}
     var container: NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer {didSet{UpdateUI()}}
     
-    var fetchedResultsController: NSFetchedResultsController<TwitterUser>?
+    var fetchedResultsController: NSFetchedResultsController<Mention>?
 
     private func UpdateUI() {
         if let context = container?.viewContext, mentions != nil {
-                let request: NSFetchRequest<TwitterUser> = TwitterUser.fetchRequest()
-            request.sortDescriptors = [NSSortDescriptor(key: "handle",
-            ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))]
+            let request: NSFetchRequest<Mention> = Mention.fetchRequest()
+            request.sortDescriptors =
+                [NSSortDescriptor(
+                    key: "type",
+                    ascending: true,
+                    selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))),
+                 NSSortDescriptor(
+                    key: "count",
+                    ascending: false),
+                 NSSortDescriptor(
+                    key: "keyword",
+                    ascending: true,
+                    selector: #selector(NSString.localizedCaseInsensitiveCompare(_:))
+                )]
+
+            request.predicate = NSPredicate(format:"count > 1 AND searchTerm = %@", mentions!)
             
-            request.predicate = NSPredicate(format: "any tweets.text contains[c] %@ and !handle beginswith[c] %@", mentions!, "Chroniques")
-                
-                fetchedResultsController = NSFetchedResultsController<TwitterUser>(
-                    fetchRequest: request,
-                    managedObjectContext: context,
-                    sectionNameKeyPath: nil,
-                    cacheName: nil)
+            fetchedResultsController = NSFetchedResultsController<Mention>(
+                fetchRequest: request,
+                managedObjectContext: context,
+                sectionNameKeyPath: "type",
+                cacheName: nil
+            )
             
             try? fetchedResultsController?.performFetch()
+            fetchedResultsController?.delegate = self
             tableView.reloadData()
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: variableIdentifiers.TwitterUserCell, for: indexPath)
-        if let twitterUser = fetchedResultsController?.object(at: indexPath) {
-            let tweetCount = tweetCountWithMentionBy(twitterUser)
-            cell.textLabel?.text = twitterUser.handle
+        
+        if let mention = fetchedResultsController?.object(at: indexPath) {
+            cell.textLabel?.text = mention.keyword
             cell.detailTextLabel?.text =
-            "\(tweetCount) tweet\((tweetCount == 1) ? "" : "s"))"
+            "\(mention.count) tweet\((mention.count == 1) ? "" : "s"))"
         }
         
         return cell
     }
     
-    private func tweetCountWithMentionBy(_ twitterUser: TwitterUser) -> Int {
-        let request: NSFetchRequest<Tweet> = Tweet.fetchRequest()
-        request.predicate = NSPredicate(format: "text contains[c] %@ and tweeter = %@", mentions!, twitterUser)
-        return (try? twitterUser.managedObjectContext!.count(for: request)) ?? 0
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            
+            if identifier == variableIdentifiers.ToMainTweetTableView {
+                if let ttvc = segue.destination as? TweetTableViewController,
+                    let cell = sender as? UITableViewCell,
+                    var text = cell.textLabel?.text {
+                    if text.hasPrefix("@") {text += " OR from:" + text}
+                    ttvc.searchText = text
+                }
+                
+            }
+        }
     }
+
 }
