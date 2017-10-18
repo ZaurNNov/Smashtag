@@ -43,7 +43,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="Qcz-gk-eTs" kind="show" id="hfC-rz-rHR"/>
+                                    <segue destination="Qcz-gk-eTs" kind="show" identifier="ToMainTweetTableView" id="hfC-rz-rHR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -56,6 +56,67 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Cy-gb-J8E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1236" y="878"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="8ch-Jm-s3Y">
+            <objects>
+                <collectionViewController id="GbY-NR-HA3" customClass="ImagesCollectionViewController" customModule="Smashtag" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="i6R-9L-gN7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bbw-6M-e59">
+                            <size key="itemSize" width="120" height="120"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="1" minY="1" maxX="1" maxY="1"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionImageCell" id="RuW-3I-dcO" customClass="ImagesCollectionViewCell" customModule="Smashtag" customModuleProvider="target">
+                                <rect key="frame" x="1" y="1" width="120" height="120"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Z3p-1c-auy">
+                                            <rect key="frame" x="42" y="42" width="37" height="37"/>
+                                        </activityIndicatorView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jEb-Sc-41v">
+                                            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="Z3p-1c-auy" firstAttribute="centerY" secondItem="jEb-Sc-41v" secondAttribute="centerY" id="CGd-Hv-WxM"/>
+                                    <constraint firstAttribute="bottom" secondItem="jEb-Sc-41v" secondAttribute="bottom" id="Szt-wa-wR4"/>
+                                    <constraint firstItem="Z3p-1c-auy" firstAttribute="centerX" secondItem="jEb-Sc-41v" secondAttribute="centerX" id="XC3-ga-xd9"/>
+                                    <constraint firstAttribute="trailing" secondItem="jEb-Sc-41v" secondAttribute="trailing" id="ejn-ja-iPd"/>
+                                    <constraint firstItem="jEb-Sc-41v" firstAttribute="top" secondItem="RuW-3I-dcO" secondAttribute="top" id="s4P-7x-NWc"/>
+                                    <constraint firstItem="jEb-Sc-41v" firstAttribute="leading" secondItem="RuW-3I-dcO" secondAttribute="leading" id="uwh-c0-c81"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="jEb-Sc-41v" id="g61-p1-gNq"/>
+                                    <outlet property="spinner" destination="Z3p-1c-auy" id="2kA-6a-bLk"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="GbY-NR-HA3" id="elx-f8-79L"/>
+                            <outlet property="delegate" destination="GbY-NR-HA3" id="XGB-DK-WLg"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Title" id="7xS-Bs-i1h">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="vyg-Se-m5y">
+                            <connections>
+                                <action selector="backToRootView:" destination="GbY-NR-HA3" id="69P-Vf-II7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SEz-H4-8Kq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2184.8000000000002" y="879.31034482758628"/>
         </scene>
         <!--Smash Tweet Table View Controller-->
         <scene sceneID="uDg-kf-YcN">
@@ -144,7 +205,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="gXU-AK-bWw">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="R75-hG-xxz"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="R75-hG-xxz">
+                            <connections>
+                                <segue destination="GbY-NR-HA3" kind="show" identifier="showImagesInTweets" id="kXA-6W-EVn"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="6Hd-Tp-Lb2">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -247,7 +312,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="tUh-fJ-Kgh">
-                                <rect key="frame" x="169" y="258.5" width="37" height="37"/>
+                                <rect key="frame" x="169" y="325" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
                         <constraints>
@@ -372,6 +437,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hfC-rz-rHR"/>
+        <segue reference="L5Z-e3-dEh"/>
+        <segue reference="4QW-dv-3N4"/>
     </inferredMetricsTieBreakers>
 </document>

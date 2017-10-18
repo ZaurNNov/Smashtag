@@ -18,6 +18,8 @@
 		CE0407651F97681B007E02A6 /* Mention.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0407641F97681B007E02A6 /* Mention.swift */; };
 		CE0407671F9773AD007E02A6 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0407661F9773AD007E02A6 /* Twitter.framework */; };
 		CE0407681F9773AD007E02A6 /* Twitter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CE0407661F9773AD007E02A6 /* Twitter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CE04076A1F978BC3007E02A6 /* ImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0407691F978BC3007E02A6 /* ImagesCollectionViewController.swift */; };
+		CE04076C1F978C16007E02A6 /* ImagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE04076B1F978C16007E02A6 /* ImagesCollectionViewCell.swift */; };
 		CE50DE591F96152E00534CBA /* SmashTweetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50DE581F96152E00534CBA /* SmashTweetTableViewController.swift */; };
 		CE50DE5B1F962A1000534CBA /* SmashTweetersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50DE5A1F962A1000534CBA /* SmashTweetersTableViewController.swift */; };
 		CE50DE5D1F96400900534CBA /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE50DE5C1F96400900534CBA /* FetchedResultsTableViewController.swift */; };
@@ -56,6 +58,8 @@
 		20C33FB81F93BE7B0056F0E6 /* TweetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
 		CE0407641F97681B007E02A6 /* Mention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mention.swift; sourceTree = "<group>"; };
 		CE0407661F9773AD007E02A6 /* Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Twitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE0407691F978BC3007E02A6 /* ImagesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewController.swift; sourceTree = "<group>"; };
+		CE04076B1F978C16007E02A6 /* ImagesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewCell.swift; sourceTree = "<group>"; };
 		CE50DE581F96152E00534CBA /* SmashTweetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmashTweetTableViewController.swift; sourceTree = "<group>"; };
 		CE50DE5A1F962A1000534CBA /* SmashTweetersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmashTweetersTableViewController.swift; sourceTree = "<group>"; };
 		CE50DE5C1F96400900534CBA /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				CEE76E101F94CBD50030E77C /* ImageViewController.swift */,
 				CEE5EFA11F94EA59007A4B48 /* RecentTableViewController.swift */,
 				CEE5EFA31F94ED7F007A4B48 /* RecentSearches.swift */,
+				CE0407691F978BC3007E02A6 /* ImagesCollectionViewController.swift */,
+				CE04076B1F978C16007E02A6 /* ImagesCollectionViewCell.swift */,
 				20C33F9A1F9399AA0056F0E6 /* Main.storyboard */,
 				20C33F9F1F9399AA0056F0E6 /* LaunchScreen.storyboard */,
 				20C33FA21F9399AA0056F0E6 /* Info.plist */,
@@ -195,7 +201,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE04076A1F978BC3007E02A6 /* ImagesCollectionViewController.swift in Sources */,
 				20C33F971F9399AA0056F0E6 /* AppDelegate.swift in Sources */,
+				CE04076C1F978C16007E02A6 /* ImagesCollectionViewCell.swift in Sources */,
 				CE8655471F9601A100A57BC3 /* Tweet.swift in Sources */,
 				CE0407651F97681B007E02A6 /* Mention.swift in Sources */,
 				CE50DE591F96152E00534CBA /* SmashTweetTableViewController.swift in Sources */,

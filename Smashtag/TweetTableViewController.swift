@@ -29,7 +29,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
     
-    private var tweets = [Array<Twitter.Tweet>]() {
+    var tweets = [Array<Twitter.Tweet>]() {
         didSet {
             //print(tweets)
         }
@@ -167,24 +167,31 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     private struct variableIdentifiers {
         //for cell
         static let TweetCell = "Tweet"
-        //for segue
         static let ShowMentions = "ShowMentions"
         static let ShowImages = "ShowImages"
+
         //other
         static let searchHashtagText = "#iOS"
     }
     
     // MARK: - Navigation
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-//    {
-//        if let id = segue.identifier {
-//            if id == variableIdentifiers.ShowMentions,
-//                let mtvc = segue.destination as? MentionsTableViewController,
-//                let tweetCell = sender as? TweetTableViewCell {
-//                mtvc.tweet = tweetCell.tweet
-//            }
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let id = segue.identifier {
+            if id == variableIdentifiers.ShowMentions,
+                let mtvc = segue.destination as? MentionsTableViewController,
+                let tweetCell = sender as? TweetTableViewCell {
+                mtvc.tweet = tweetCell.tweet
+            } else if id == variableIdentifiers.ShowImages {
+                if let icvc = segue.destination as? ImagesCollectionViewController {
+                    icvc.tweets = tweets
+                    icvc.title = "Images: \(searchText!)"
+                }
+            }
+        }
+    }
+    
+    
     
 }

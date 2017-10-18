@@ -59,21 +59,48 @@ class SmashTweetTableViewController: TweetTableViewController {
         }
     }
     
+//    var tweets = [Array<Twitter.Tweet>]() {
+//        didSet {
+//            //print(tweets)
+//        }
+//    }
+    
     private struct variableIdentifiers {
         //for segue
         static let ShowMentions = "ShowMentions"
+        static let ShowImages = "ShowImages"
     }
     
     // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         if let id = segue.identifier {
             if id == variableIdentifiers.ShowMentions,
                 let mtvc = segue.destination as? MentionsTableViewController,
                 let tweetCell = sender as? TweetTableViewCell {
                 mtvc.tweet = tweetCell.tweet
+            } else if id == variableIdentifiers.ShowImages {
+                if let icvc = segue.destination as? ImagesCollectionViewController {
+                    icvc.tweets = tweets
+                    icvc.title = "Images: \(searchText!)"
+                }
             }
         }
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+//    {
+//        if let id = segue.identifier {
+//            if id == variableIdentifiers.ShowMentions,
+//                let mtvc = segue.destination as? MentionsTableViewController,
+//                let tweetCell = sender as? TweetTableViewCell {
+//                mtvc.tweet = tweetCell.tweet
+//            } else if id == variableIdentifiers.ShowImages {
+//                if let icvc = segue.destination as? ImagesCollectionViewController {
+//                    icvc.tweets = tweets
+//                    icvc.title = "Images: \(searchText!)"
+//                }
+//            }
+//        }
+//    }
 }
