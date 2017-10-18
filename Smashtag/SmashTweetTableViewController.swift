@@ -59,10 +59,19 @@ class SmashTweetTableViewController: TweetTableViewController {
     
     private struct variableIdentifiers {
         //for segue
-        
+        static let ShowMentions = "ShowMentions"
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if let id = segue.identifier {
+            if id == variableIdentifiers.ShowMentions,
+                let mtvc = segue.destination as? MentionsTableViewController,
+                let tweetCell = sender as? TweetTableViewCell {
+                mtvc.tweet = tweetCell.tweet
+            }
+        }
     }
 }

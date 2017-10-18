@@ -113,6 +113,30 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setPopToRootButton()
+    }
+    
+    func setPopToRootButton() {
+        if let controllers = navigationController?.viewControllers, controllers.count >= 2 {
+            let toRootButton = UIBarButtonItem(barButtonSystemItem: .stop,
+                                               target: self,
+                                               action: #selector(toRootViewController))
+            if let buttons = navigationItem.rightBarButtonItems{
+                let con = buttons.flatMap{$0.action}.contains( #selector(toRootViewController))
+                if !con {
+                    let rightBarButtons = [toRootButton] + buttons
+                    navigationItem.setRightBarButtonItems(rightBarButtons, animated: true)
+                }
+            } else {
+                let rightBarButtons = [toRootButton]
+                navigationItem.setRightBarButtonItems(rightBarButtons, animated: true)
+            }
+        }
+    }
+    
+    @objc
+    func toRootViewController() {
+        _ = navigationController?.popToRootViewController(animated: true)
     }
     
     // MARK: - UITableViewDataSourse
@@ -152,15 +176,15 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     
     // MARK: - Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        if let id = segue.identifier {
-            if id == variableIdentifiers.ShowMentions,
-                let mtvc = segue.destination as? MentionsTableViewController,
-                let tweetCell = sender as? TweetTableViewCell {
-                mtvc.tweet = tweetCell.tweet
-            }
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+//    {
+//        if let id = segue.identifier {
+//            if id == variableIdentifiers.ShowMentions,
+//                let mtvc = segue.destination as? MentionsTableViewController,
+//                let tweetCell = sender as? TweetTableViewCell {
+//                mtvc.tweet = tweetCell.tweet
+//            }
+//        }
+//    }
     
 }
