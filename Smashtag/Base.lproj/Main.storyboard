@@ -207,7 +207,8 @@
                     <navigationItem key="navigationItem" id="gXU-AK-bWw">
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="R75-hG-xxz">
                             <connections>
-                                <segue destination="GbY-NR-HA3" kind="show" identifier="showImagesInTweets" id="kXA-6W-EVn"/>
+                                <action selector="showImages:" destination="Qcz-gk-eTs" id="rjH-J6-glp"/>
+                                <segue destination="GbY-NR-HA3" kind="show" identifier="showImages" id="yCn-0c-sLd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
