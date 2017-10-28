@@ -79,7 +79,7 @@ class SmashTweetTableViewController: TweetTableViewController {
             } else if id == variableIdentifiers.ShowImages {
                 if let icvc = segue.destination as? ImagesCollectionViewController {
                     icvc.tweets = tweets
-                    icvc.title = "Images: \(searchText!)"
+                    icvc.title = "Images: " + "\(searchText ?? " ")"
                 }
             }
         }
